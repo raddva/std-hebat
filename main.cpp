@@ -1,4 +1,7 @@
+#include"item.h"
+#include "statistics.h"
 #include "inventory.h"
+#include"mod.h"
 #include <iostream>
 
 using namespace std;
@@ -45,12 +48,12 @@ int main() {
 
     int pilihan = -1;
     while (pilihan != 0) {
-        cout << "\n=== MENU UTAMA GAME INVENTORY (MINECRAFT MLL) ===\n";
-        cout << "1. Tampilkan Semua Player, Inventory & Detail Item\n";
-        cout << "2. Tambah Player Baru (Insert First List 1)\n";
-        cout << "3. Tambah Item ke Inventory Player (Insert Last List 2)\n";
-        cout << "4. Tambah Detail/Enchantment Item (Insert First List 3)\n";
-        cout << "5. Gunakan Item / Serang Player (Update Used, Durability & Health)\n";
+        cout << "\n=== MAIN MENU ===\n";
+        cout << "1. Show All Players, Inventory & Detail Item\n";
+        cout << "2. Tambah Player\n";
+        cout << "3. Tambah Item ke Inventory Player\n";
+        cout << "4. Tambah Detail Item \n";
+        cout << "5. Tambah Mobs\n";
         cout << "6. Craft / Mine Tambahan Stok Item\n";
         cout << "7. Heal Health Bar Player\n";
         cout << "8. Hapus Item dari Inventory Player\n";

@@ -1,25 +1,20 @@
+#include"item.h"
+#include "statistics.h"
 #include "inventory.h"
+#include"mod.h"
 
-/* I.S. Sembarang
-   F.S. Terbentuk ListPlayer kosong (LP.first = nullptr) */
 void createListPlayer(ListPlayer &LP) {
     LP.first = nullptr;
 }
 
-/* I.S. Sembarang
-   F.S. Terbentuk ListInventory kosong (LI.first = nullptr) */
 void createListInventory(ListInventory &LI) {
     LI.first = nullptr;
 }
 
-/* I.S. Sembarang
-   F.S. Terbentuk ListDetail kosong (LD.first = nullptr) */
 void createListDetail(ListDetail &LD) {
     LD.first = nullptr;
 }
 
-/* I.S. Data player terdefinisi
-   F.S. Mengembalikan alamat elemen Player baru dengan firstInv = nullptr dan next = nullptr */
 adrPlayer alokasiPlayer(infotypePlayer data) {
     adrPlayer P = new elmPlayer;
     P->info = data;
@@ -28,8 +23,6 @@ adrPlayer alokasiPlayer(infotypePlayer data) {
     return P;
 }
 
-/* I.S. Data inventory terdefinisi
-   F.S. Mengembalikan alamat elemen Inventory baru dengan firstDetail = nullptr dan next = nullptr */
 adrInventory alokasiInventory(infotypeInventory data) {
     adrInventory I = new elmInventory;
     I->info = data;
@@ -38,8 +31,6 @@ adrInventory alokasiInventory(infotypeInventory data) {
     return I;
 }
 
-/* I.S. Data detail item terdefinisi
-   F.S. Mengembalikan alamat elemen Detail baru dengan next = nullptr */
 adrDetail alokasiDetail(infotypeDetail data) {
     adrDetail D = new elmDetail;
     D->info = data;
@@ -47,8 +38,6 @@ adrDetail alokasiDetail(infotypeDetail data) {
     return D;
 }
 
-/* I.S. ListPlayer terdefinisi (mungkin kosong), P adalah alamat elemen Player baru
-   F.S. Elemen P ditambahkan sebagai elemen pertama pada ListPlayer (Insert First) */
 void insertFirstPlayer(ListPlayer &LP, adrPlayer P) {
     if (P != nullptr) {
         P->next = LP.first;
@@ -56,8 +45,6 @@ void insertFirstPlayer(ListPlayer &LP, adrPlayer P) {
     }
 }
 
-/* I.S. P adalah alamat elemen Player yang valid, I adalah alamat elemen Inventory baru
-   F.S. Elemen I ditambahkan sebagai elemen terakhir pada inventory milik P (Insert Last) */
 void insertLastInventory(adrPlayer P, adrInventory I) {
     if (P != nullptr && I != nullptr) {
         if (P->firstInv == nullptr) {
@@ -72,8 +59,6 @@ void insertLastInventory(adrPlayer P, adrInventory I) {
     }
 }
 
-/* I.S. I adalah alamat elemen Inventory yang valid, D adalah alamat elemen Detail baru
-   F.S. Elemen D ditambahkan sebagai elemen pertama pada detail milik I (Insert First) */
 void insertFirstDetail(adrInventory I, adrDetail D) {
     if (I != nullptr && D != nullptr) {
         D->next = I->firstDetail;
@@ -81,8 +66,6 @@ void insertFirstDetail(adrInventory I, adrDetail D) {
     }
 }
 
-/* I.S. ListPlayer terdefinisi, idPlayer terdefinisi
-   F.S. Mengembalikan alamat elemen Player jika ditemukan, atau nullptr jika tidak ditemukan */
 adrPlayer searchPlayer(ListPlayer LP, string idPlayer) {
     adrPlayer P = LP.first;
     adrPlayer foundPlayer = nullptr;
@@ -97,8 +80,6 @@ adrPlayer searchPlayer(ListPlayer LP, string idPlayer) {
     return foundPlayer;
 }
 
-/* I.S. P adalah alamat elemen Player yang valid, idInv terdefinisi
-   F.S. Mengembalikan alamat elemen Inventory milik P jika ditemukan, atau nullptr jika tidak */
 adrInventory searchInventory(adrPlayer P, string idInv) {
     adrInventory foundInv = nullptr;
     if (P != nullptr) {
@@ -114,8 +95,6 @@ adrInventory searchInventory(adrPlayer P, string idInv) {
     return foundInv;
 }
 
-/* I.S. I adalah alamat elemen Inventory yang valid, idDetail terdefinisi
-   F.S. Mengembalikan alamat elemen Detail milik I jika ditemukan, atau nullptr jika tidak */
 adrDetail searchDetail(adrInventory I, string idDetail) {
     adrDetail foundDet = nullptr;
     if (I != nullptr) {
@@ -131,8 +110,6 @@ adrDetail searchDetail(adrInventory I, string idDetail) {
     return foundDet;
 }
 
-/* I.S. I adalah alamat elemen Inventory yang valid
-   F.S. Seluruh elemen Detail pada I dihapus dan didealokasi (I->firstDetail = nullptr) */
 void deleteAllDetail(adrInventory I) {
     if (I != nullptr) {
         adrDetail D = I->firstDetail;
@@ -146,8 +123,6 @@ void deleteAllDetail(adrInventory I) {
     }
 }
 
-/* I.S. P adalah alamat elemen Player yang valid
-   F.S. Elemen pertama pada inventory milik P dihapus beserta seluruh detailnya (Delete First) */
 void deleteFirstInventory(adrPlayer P, adrInventory &I) {
     I = nullptr;
     if (P != nullptr && P->firstInv != nullptr) {
@@ -160,8 +135,6 @@ void deleteFirstInventory(adrPlayer P, adrInventory &I) {
     }
 }
 
-/* I.S. P adalah alamat elemen Player yang valid, idInv terdefinisi
-   F.S. Elemen inventory dengan idInv dihapus dari P beserta seluruh detailnya jika ditemukan */
 void deleteInventoryByID(adrPlayer P, string idInv) {
     if (P != nullptr && P->firstInv != nullptr) {
         adrInventory curr = P->firstInv;
@@ -191,8 +164,6 @@ void deleteInventoryByID(adrPlayer P, string idInv) {
     }
 }
 
-/* I.S. ListPlayer terdefinisi, idPlayer terdefinisi
-   F.S. Elemen Player dengan idPlayer dihapus beserta seluruh inventory dan detailnya */
 void deletePlayerByID(ListPlayer &LP, string idPlayer) {
     if (LP.first != nullptr) {
         adrPlayer curr = LP.first;
@@ -225,8 +196,6 @@ void deletePlayerByID(ListPlayer &LP, string idPlayer) {
     }
 }
 
-/* I.S. Health saat ini dan maksimal terdefinisi
-   F.S. Menampilkan visualisasi Health Bar di layar */
 void printHealthBar(int health, int maxHealth) {
     int totalBar = 10;
     int filled = 0;
@@ -246,8 +215,6 @@ void printHealthBar(int health, int maxHealth) {
     cout << "] " << health << "/" << maxHealth << " HP";
 }
 
-/* I.S. ListPlayer terdefinisi (mungkin kosong)
-   F.S. Menampilkan seluruh data Player, Inventory (statistik item), dan Detail Item */
 void showAllData(ListPlayer LP) {
     cout << "\n====================================================================\n";
     cout << "                  INVENTORY & STATISTICS                              \n";
@@ -296,8 +263,6 @@ void showAllData(ListPlayer LP) {
     }
 }
 
-/* I.S. P adalah alamat elemen Player yang valid
-   F.S. Mengembalikan total akumulasi damage dari seluruh item yang dimiliki Player P */
 int hitungTotalDamagePlayer(adrPlayer P) {
     int totalDamage = 0;
     if (P != nullptr) {
@@ -314,10 +279,6 @@ int hitungTotalDamagePlayer(adrPlayer P) {
     return totalDamage;
 }
 
-/* I.S. ListPlayer terdefinisi, idAttacker, idTarget, dan idInv terdefinisi
-   F.S. Attacker menggunakan item idInv (timesUsed bertambah, durability berkurang).
-        Jika item tipe Weapon/Tool, health Target berkurang sesuai damage.
-        Jika item tipe Block, jumlah berkurang 1. Item otomatis terhapus jika rusak/habis. */
 void useOrAttackItem(ListPlayer &LP, string idAttacker, string idTarget, string idInv) {
     adrPlayer attacker = searchPlayer(LP, idAttacker);
     if (attacker == nullptr) {
@@ -381,8 +342,6 @@ void useOrAttackItem(ListPlayer &LP, string idAttacker, string idTarget, string 
     }
 }
 
-/* I.S. ListPlayer terdefinisi, idPlayer dan idInv terdefinisi
-   F.S. Menambahkan jumlah item sebanyak qty dan menambah statistik timesCrafted atau timesMined */
 void tambahStokItem(ListPlayer &LP, string idPlayer, string idInv, int qty, bool isCrafted) {
     adrPlayer P = searchPlayer(LP, idPlayer);
     if (P != nullptr && qty > 0) {
@@ -404,8 +363,6 @@ void tambahStokItem(ListPlayer &LP, string idPlayer, string idInv, int qty, bool
     }
 }
 
-/* I.S. ListPlayer terdefinisi, idPlayer dan healPoint terdefinisi
-   F.S. Menambah health Player sebesar healPoint tanpa melebihi maxHealth */
 void healPlayer(ListPlayer &LP, string idPlayer, int healPoint) {
     adrPlayer P = searchPlayer(LP, idPlayer);
     if (P != nullptr && healPoint > 0) {
